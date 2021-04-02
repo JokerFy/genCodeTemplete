@@ -1,0 +1,41 @@
+url-path = ""
+http-port="8081"
+author="Finley"
+email=""
+# 应用系统设置
+[setting]
+    logpath = "/tmp/log/autocreate"
+    assest=""
+    cdn=""
+    domain=""
+
+cache-mode = 1
+
+debug=true
+
+# 数据库连接
+[database]
+   [[database.default]]
+        host     = "localhost"
+        port     = "3306"
+        user     = "root"
+        pass     = "123456789"
+        name     = "base"
+        type     = "mysql"
+        role     = "master"
+        charset  = "utf8"
+        priority = "1"
+          debug  = true
+
+[redis]
+    disk  = "127.0.0.1:6379,0"
+    cache = "127.0.0.1:6379,1"
+
+[viewer]
+    Paths       = ["/Users/finley/www/go-project/demo/template/template"] # 模板文件搜索目录路径，建议使用绝对路径。默认为当前程序工作路径
+    DefaultFile = "index.html"          # 默认解析的模板引擎文件。默认为"index.html"
+    Delimiters  =  ["${", "}"]          # 模板引擎变量分隔符号。默认为 ["{{", "}}"]
+    AutoEncode  = false                 # 是否默认对变量内容进行XSS编码。默认为false
+    [viewer.Data]                       # 自定义的全局Key-Value键值对，将在模板解析中可被直接使用到
+        Key1 = "Value1"
+        Key2 = "Value2"

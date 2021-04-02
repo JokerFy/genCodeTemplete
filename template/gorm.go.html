@@ -1,0 +1,47 @@
+/**
+* @Author: ${.Author}
+* @Email: ${.Email}
+* @Description:
+* @File:  ${.TplTableName}_model
+* @Version: 1.0.0
+* @Date: ${.DateTime}
+*/
+package dao
+
+import (
+    "${.TplProject}/db"
+    "strings"
+    "time"
+)
+${.TplExtraImports}
+${.TplStructDefine}
+
+//创建m${.TplModelName}
+func (model *${.TplModelName}) Insert() error {
+    return db.MySqlDB.Create(&model).Error
+}
+//删除${.TplModelName}
+func (model ${.TplModelName}) Delete() error {
+    return db.MySqlDB.Model(&${.TplModelName}{}).Where(&${.TplModelName}{ID: model.ID}).Delete(&model).Error
+}
+
+//更新${.TplModelName}
+func (model *${.TplModelName}) Update() error {
+    return db.MySqlDB.Save(&model).Error
+}
+
+//根据ID查询${.TplModelName}
+func (model ${.TplModelName}) Get() error {
+    return db.MySqlDB.Where(${.TplModelName}{Id: model.Id}).First(&model).Error
+}
+
+//分页查询${.TplModelName}
+func (model ${.TplModelName}) GetListByPage(where string, pw PageWrapper) (list []${.TplModelName}, total int, err error) {
+    d := db.MySqlDB.Model(&${.TplModelName}{}).Where(where)
+    if err = d.Count(&total).Error; err != nil {
+    return
+    }
+    offset := (pw.CurrentPage - 1) * pw.CurrentSize
+    err = d.Limit(pw.CurrentSize).Offset(offset).Find(&list).Error
+    return
+}
